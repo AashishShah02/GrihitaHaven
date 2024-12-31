@@ -1,3 +1,42 @@
+<?php
+// Database connection
+$conn = new mysqli("localhost", "root", "", "grihita_db");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $breed = $conn->real_escape_string($_POST['breed']);
+    $name = $conn->real_escape_string($_POST['name']);
+    $location = $conn->real_escape_string($_POST['location']);
+
+    // Handle image upload
+    $targetDir = "uploads/";
+    $imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
+    $targetFile = $targetDir . uniqid() . "." . $imageFileType;
+
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        // SQL query to insert data
+        $sql = "INSERT INTO dogs (image_location, breed, name, location) VALUES ('$targetFile', '$breed', '$name', '$location')";
+
+        if ($conn->query($sql) === TRUE) {
+            $dogId = $conn->insert_id; // Get the last inserted ID
+            header("Location: view_dog.php?id=$dogId"); // Redirect to the dog details page
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Error uploading image.";
+    }
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +47,8 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-    <div class="layout">
-        <?php include 'sidebar.php'; ?>
+<div class="layout">
+    <?php include 'sidebar.php'; ?>
     <div class="container">
         <h1>Add Dog Details</h1>
         <form action="add_dog.php" method="POST" enctype="multipart/form-data">
@@ -22,12 +61,12 @@
             <label for="breed">Breed:</label>
             <input type="text" name="breed" id="breed" required>
 
-
-            <label for="name">Location:</label>
-            <input type="text" name="location" id="Location" required>
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
 
             <button type="submit">Add Dog</button>
         </form>
     </div>
+</div>
 </body>
 </html>

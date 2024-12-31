@@ -289,7 +289,7 @@ footer p a:hover {
         <div class="logo">🐾 Grihita Haven</div>
         <nav>
             <a href="#">Home</a>
-            <a href="#">Dogs</a>
+            <a href="Dog.php">Dogs</a>
             <a href="aboutus.php">About us</a>
         </nav>
         <?php
