@@ -74,9 +74,9 @@ $users = getUsers($pdo);
     <title>User Management</title>
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'admin_header.php'; ?>
     <div class="layout">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'admin_sidebar.php'; ?>
 
         <div class="main-content">
             <h2>User Management</h2>

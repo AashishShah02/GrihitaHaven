@@ -64,9 +64,9 @@ $conn->close();
     <title>Manage Dog Details</title>
 </head>
 <body>
-<?php include 'header.php'; ?>
+<?php include 'admin_header.php'; ?>
     <div class="layout">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'admin_sidebar.php'; ?>
     <div class="container">
     <h1>Manage Dog Details</h1>
     <table>

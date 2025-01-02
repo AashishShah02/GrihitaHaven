@@ -55,9 +55,9 @@ $conn->close();
     <link rel="stylesheet" href="dog.css">
 </head>
 <body>
-<?php include 'header.php'; ?>
+<?php include 'admin_header.php'; ?>
 <div class="layout">
-    <?php include 'sidebar.php'; ?>
+    <?php include 'admin_sidebar.php'; ?>
     <div class="container">
         <h1>Add Dog Details</h1>
         <form action="add_dog.php" method="POST" enctype="multipart/form-data">
