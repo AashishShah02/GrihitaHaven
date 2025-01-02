@@ -1,4 +1,10 @@
 <?php
+session_start();
+?>
+<?php
+ if(!isset($_SESSION['roles'] )&& $_SESSION['roles']!="admin"){
+        header("Location: index.php");
+    }
 // Database connection
 $conn = new mysqli("localhost", "root", "", "grihita_db");
 

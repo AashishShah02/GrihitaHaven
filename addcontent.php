@@ -1,4 +1,10 @@
 <?php
+session_start();
+?>
+<?php
+if(!isset($_SESSION['roles'] )&& $_SESSION['roles']!="admin"){
+    header("Location: index.php");
+}
 // Database connection
 $conn = new mysqli("localhost", "root", "", "grihita_db");
 
@@ -12,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $breed = $conn->real_escape_string($_POST['breed']);
     $name = $conn->real_escape_string($_POST['name']);
     $location = $conn->real_escape_string($_POST['location']);
+    $description = $conn->real_escape_string($_POST['description']);
 
     // Handle image upload
     $targetDir = "uploads/";
@@ -20,11 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
         // SQL query to insert data
-        $sql = "INSERT INTO dogs (image_location, breed, name, location) VALUES ('$targetFile', '$breed', '$name', '$location')";
+        $sql = "INSERT INTO dogs (image_location, breed, name, location, description) 
+                VALUES ('$targetFile', '$breed', '$name', '$location', '$description')";
 
         if ($conn->query($sql) === TRUE) {
             $dogId = $conn->insert_id; // Get the last inserted ID
-            header("Location: view_dog.php?id=$dogId"); // Redirect to the dog details page
+            header("Location: Dog.php?id=$dogId"); // Redirect to the dog details page
             exit();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
@@ -36,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +72,9 @@ $conn->close();
 
             <label for="location">Location:</label>
             <input type="text" name="location" id="location" required>
+
+            <label for="descriptiom">Description:</label>
+            <input type="text" name="description" id="description" required>
 
             <button type="submit">Add Dog</button>
         </form>

@@ -33,6 +33,14 @@ try {
                 // Login successful
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
+
+                // Check if 'roles' exists in the fetched data
+                if (isset($user['roles'])) {
+                    $_SESSION['roles'] = $user['roles'];
+                } else {
+                    // Set a default role if roles column is missing or empty
+                    $_SESSION['roles'] = 'user'; // Default role
+                }
                 
                 // Redirect to a protected page or dashboard
                 header("Location: index.php");

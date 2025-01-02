@@ -1,4 +1,10 @@
 <?php
+session_start();
+?>
+<?php
+if(!isset($_SESSION['roles'] )&& $_SESSION['roles']!="admin"){
+    header("Location: index.php");
+}
 $host = 'localhost';
 $dbname = 'grihita_db';
 $username = 'root';

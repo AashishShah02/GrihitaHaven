@@ -1,16 +1,20 @@
-/* General styles */
-body {
-    font-family: 'Arial', sans-serif;
+ /* Basic Reset */
+ * {
     margin: 0;
     padding: 0;
-    color: #333;
-    line-height: 1.6;
-    background-color: #f9f9f9;
-}
-
-
-
-/* Header Styling */
+    box-sizing: border-box;
+ }
+ 
+ body {
+     font-family: 'Arial', sans-serif;
+     line-height: 1.6;
+     background-color: #fff;
+ }
+ 
+ a {
+     text-decoration: none;
+ }
+ 
 .header {
     display: flex;
     align-items: center;
@@ -58,9 +62,10 @@ body {
     border: none;
     cursor: pointer;
 }
-
 /* About Section */
 .about-section {
+    position: relative;
+    top:-15px;
     background-color: #ffffff;
     padding: 40px 20px;
     text-align: center;

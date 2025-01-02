@@ -6,6 +6,6 @@ $dbname = "grihita_db"; // Your database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error){
-    die("Error connecting to daatabase");
+    die("Error connecting to database");
 }
 ?>
