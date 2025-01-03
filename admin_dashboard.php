@@ -26,25 +26,37 @@ if(!isset($_SESSION['roles'] )&& $_SESSION['roles']!="admin"){
 <?php include 'admin_sidebar.php'; ?>
 <section class="stats">
         <?php
-        $query_book = "SELECT * FROM dogs";
-        $result_book = mysqli_query($conn, $query_book);
-        $total_books = mysqli_num_rows($result_book);
+        $query_dog = "SELECT * FROM dogs";
+        $result_dog = mysqli_query($conn, $query_dog);
+        $total_dog = mysqli_num_rows($result_dog);
 
         $query_user = "SELECT * FROM users";
         $result_user = mysqli_query($conn, $query_user);
         $total_user = mysqli_num_rows($result_user);
 
-
+        $query_adoption = "SELECT * FROM dogadoption";
+        $result_adoption = mysqli_query($conn, $query_adoption);
+        $total_adoption = mysqli_num_rows($result_adoption);
         ?>
         <div class="stat-card">
-          <h3>Total Dogs <i class="fas fa-book"></i></h3>
-          <p> <?= $total_books ?></p>
+          <h3>Total Dogs <i class="fas fa-dog"></i></h3>
+          <span>🐶</span>
+       
+          <p> <?= $total_dog?></p>
         </div>
         <div class="stat-card">
           <h3>Total Users <i class="fas fa-users"></i></h3>
+          <Span>👥</Span>
           <p> <?= $total_user ?></p>
         </div>
+        <div class="stat-card">
+            <h3>Total Adoption <i class="fas fa-adoption"></i></h3>
+            <span>🍼</span>
+            <p> <?= $total_user ?></p>
+          </div>
       </section>
+
+      
 
 </body>
 </html>

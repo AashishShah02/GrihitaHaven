@@ -52,7 +52,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Dog Information</title>
-    <link rel="stylesheet" href="dog.css">
+    <link rel="stylesheet" href="addcontent.css">
 </head>
 <body>
 <?php include 'admin_header.php'; ?>

@@ -65,7 +65,7 @@ include 'db.php'; ?>
 
         /* Main Content */
         .dashboard-main {
-            margin-left: 250px; /* Space for the fixed sidebar */
+            margin: 110px 10px 0px 206px;
             padding: 20px;
             flex: 1;
         }
@@ -89,7 +89,7 @@ include 'db.php'; ?>
         .Adoption_container {
             width: 90%;
             max-width: 800px;
-            margin: 50px auto;
+            margin: 110px 0px 0px 400px;
             background: #fff;
             padding: 20px;
             border-radius: 10px;

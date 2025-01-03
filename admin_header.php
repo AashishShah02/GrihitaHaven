@@ -19,11 +19,11 @@
     align-items: center;
     flex-wrap: wrap; /* Makes it responsive */
     gap: 20px;
-    padding: 20px;
+    padding: 80px;
     background-color: #f8f9fa; /* Light background for contrast */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
+    margin: 80px 0px 0px 206px;
 }
 
 /* Individual stat card styling */
