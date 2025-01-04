@@ -12,41 +12,41 @@ if ($conn->connect_error) {
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    echo "You must be logged in to adopt a dog.";
+    echo "You must be logged in to view your adoption requests.";
     exit();
 }
 
 // Get the user ID from the session
 $userId = $_SESSION['user_id'];
 
-// Validate and retrieve the dog ID from the URL
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $dogId = intval($_GET['id']);
+// Fetch the logged-in user's adoption records
+$query = "SELECT da.id, d.name AS dog_name, da.status 
+          FROM dogadoption da 
+          INNER JOIN dogs d ON da.dog = d.id 
+          WHERE da.user = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    // Check if the dog exists in the database
-    $checkDogQuery = "SELECT id FROM dogs WHERE id = ?";
-    $stmt = $conn->prepare($checkDogQuery);
-    $stmt->bind_param("i", $dogId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 0) {
-        echo "The selected dog does not exist.";
-        exit();
+if ($result->num_rows > 0) {
+    echo "<h2>Your Adoption Requests</h2>";
+    echo "<table border='1'>
+            <tr>
+                <th>Adoption ID</th>
+                <th>Dog Name</th>
+                <th>Status</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . $row['id'] . "</td>
+                <td>" . $row['dog_name'] . "</td>
+                <td>" . $row['status'] . "</td>
+              </tr>";
     }
-
-    // Insert the adoption record
-    $insertQuery = "INSERT INTO dogadoption (user, dog, status) VALUES (?, ?, 'Pending')";
-    $stmt = $conn->prepare($insertQuery);
-    $stmt->bind_param("ii", $userId, $dogId);
-
-    if ($stmt->execute()) {
-        echo "Adoption request submitted successfully!";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+    echo "</table>";
 } else {
-    echo "Invalid request.";
+    echo "You have not submitted any adoption requests.";
 }
 
 $stmt->close();
