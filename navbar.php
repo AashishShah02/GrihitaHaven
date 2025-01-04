@@ -598,8 +598,40 @@ footer p a:hover {
         ?>
         <div style="display:flex;justify-content:center;align-items:center;gap:5px;">
         Welcome<span style="color:#bb5682;"><?=$_SESSION['username']?></span>
+       
 
-        <img src="<?=(isset( $_SESSION["user_image"]))? $_SESSION["user_image"]:"Images\user.jpg"?>" alt="" class="user-profile" id="user-profile">
+        <?php
+ 
+$userid = $_SESSION["user_id"];
+
+// Database connection
+$conn = new mysqli("localhost", "root", "", "grihita_db");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch user profile picture
+$sql = "SELECT profile_picture FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userid);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$user_image = "Images/user.jpg"; // Default image
+
+if ($row = $result->fetch_assoc()) {
+    if (!empty($row["profile_picture"])) {
+        $user_image = $row["profile_picture"];
+    }
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+<img src="<?= htmlspecialchars($user_image, ENT_QUOTES, 'UTF-8') ?>" alt="User Profile" class="user-profile" id="user-profile">
 
         <ul class="profile-settings" id="profile-settings">
             <li><?=$_SESSION['username']?></li>
