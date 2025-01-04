@@ -8,17 +8,26 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch adoption data along with user and dog details
-$sql = "SELECT 
-            dogadoption.id AS adoption_id, 
-            users.username AS user_name, 
-            dogs.name AS dog_name, 
-            dogadoption.status AS adoption_status 
-        FROM dogadoption
-        INNER JOIN users ON dogadoption.user = users.id
-        INNER JOIN dogs ON dogadoption.dog = dogs.id";
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "You must be logged in to view your adoption requests.";
+    exit();
+} 
 
-$result = $conn->query($sql);
+$userId = $_SESSION['user_id'];
+ 
+
+// Fetch the logged-in user's adoption records
+$query = "SELECT da.id, d.name AS dog_name,d.breed as dog_breed,d.location as dog_location, da.status 
+          FROM dogadoption da 
+          INNER JOIN dogs d ON da.dog = d.id 
+          WHERE da.user = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+ 
 
 ?>
 <?php include 'user_header.php'; ?>
@@ -32,18 +41,22 @@ $result = $conn->query($sql);
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>User</th>
                     <th>Dog</th>
+                    <th>Breed</th>
+                    <th>Location</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()) { ?>
+                <?php
+                $count=1;
+                while ($row = $result->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['adoption_id']); ?></td>
-                    <td><?php echo htmlspecialchars($row['user_name']); ?></td>
+                    <td><?=$count++;?></td>
                     <td><?php echo htmlspecialchars($row['dog_name']); ?></td>
-                    <td><?php echo htmlspecialchars($row['adoption_status']); ?></td>
+                    <td><?php echo htmlspecialchars($row['dog_breed']); ?></td>
+                    <td><?php echo htmlspecialchars($row['dog_location']); ?></td>
+                    <td><?php echo htmlspecialchars($row['status']); ?></td>
                 </tr>
                 <?php } ?>
             </tbody>

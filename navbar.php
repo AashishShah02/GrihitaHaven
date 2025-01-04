@@ -598,7 +598,9 @@ footer p a:hover {
         ?>
         <div style="display:flex;justify-content:center;align-items:center;gap:5px;">
         Welcome<span style="color:#bb5682;"><?=$_SESSION['username']?></span>
-        <img src="Images\user.jpg" alt="" class="user-profile" id="user-profile">
+
+        <img src="<?=(isset( $_SESSION["user_image"]))? $_SESSION["user_image"]:"Images\user.jpg"?>" alt="" class="user-profile" id="user-profile">
+
         <ul class="profile-settings" id="profile-settings">
             <li><?=$_SESSION['username']?></li>
             <li><?php

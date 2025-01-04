@@ -32,6 +32,7 @@ try {
             if (password_verify($password, $user['password'])) {
                 // Login successful
                 $_SESSION['user_id'] = $user['id'];
+                $_SESSION["user_image"]=$user["profile_picture"];
                 $_SESSION['username'] = $user['username'];
 
                 // Check if 'roles' exists in the fetched data

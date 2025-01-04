@@ -52,7 +52,7 @@ if(!isset($_SESSION['roles'] )&& $_SESSION['roles']!="admin"){
         <div class="stat-card">
             <h3>Total Adoption <i class="fas fa-adoption"></i></h3>
             <span>🍼</span>
-            <p> <?= $total_user ?></p>
+            <p> <?=   $total_adoption ?></p>
           </div>
       </section>
 
